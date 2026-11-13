@@ -5,20 +5,17 @@ import { z } from "zod";
 import { platform as platformEnum, type DraftContent, type Platform, type SlideContent } from "@/db/schema";
 import { checkRealSituation } from "@/features/interview/llm";
 import { draftBlocker, finalizeBlockers } from "@/features/interview/proof";
-import { lintDraft } from "@/features/slop/lint";
 import { replaceFlags } from "@/features/slop/queries";
 import { reviewDrafts } from "@/features/slop/review";
 import { requireOwner } from "@/lib/auth";
-import { generateDraft, type GeneratedDraft, type SlideKind } from "./generate";
+import { generateDraft, type SlideKind } from "./generate";
+import { draftAllPlatforms, storeDraft } from "./generate-all";
 import type { DraftContext } from "./prompt";
 import {
   finalizeDrafts,
   getDraftContext,
   getLatestDrafts,
   getSlides,
-  insertDraft,
-  markDrafted,
-  replaceSlides,
 } from "./queries";
 import { draftText } from "./text";
 
@@ -43,32 +40,16 @@ async function loadContext(postId: string) {
   return data;
 }
 
-/** Save a generated or edited draft as a new version, with slides and lint flags. */
-async function store(ctx: DraftContext, postId: string, platform: Platform, draft: GeneratedDraft) {
-  const row = await insertDraft(postId, platform, draft.content);
-  let slides: SlideContent[] = [];
-  if (platform === "instagram" && draft.slides) {
-    await replaceSlides(postId, draft.slides);
-    slides = draft.slides.map((s) => s.content);
-  } else if (platform === "instagram") {
-    slides = (await getSlides(postId)).map((s) => s.content);
-  }
-  const flags = lintDraft(platform, draft.content, slides, ctx.profile?.neverMention);
-  await replaceFlags("lint", [{ draftId: row.id, flags }]);
-}
+const store = storeDraft;
 
-/** First generation: all three platforms in parallel. */
+/** First generation: all three platforms in parallel. Answers are optional (drafts from the source alone). */
 export async function generateDrafts(postId: string): Promise<Result> {
   await requireOwner();
   const { post, ctx } = await loadContext(postId);
   const blocked = draftBlocker({ ...ctx, type: post.type });
   if (blocked) return { error: blocked };
-  if (!ctx.qas.some((q) => q.answer?.trim())) return { error: "Answer at least one question first." };
 
-  const platforms = platformEnum.enumValues;
-  const results = await Promise.all(platforms.map((p) => generateDraft(ctx, p)));
-  for (const [i, p] of platforms.entries()) await store(ctx, post.id, p, results[i]);
-  await markDrafted(post.id);
+  await draftAllPlatforms(post.id);
   refresh();
   return {};
 }

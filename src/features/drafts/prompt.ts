@@ -60,6 +60,9 @@ export function buildDraftPrompt(
     "AI-written examples in PROOF are illustrative code, not the owner's experience; do not claim the owner wrote or shipped them.",
     avoid.length ? `Never mention these names: ${avoid.join(", ")}.` : "",
     `Post type. ${TYPE_GOAL[ctx.post.type]}`,
+    ctx.qas.some((q) => q.answer?.trim()) || ctx.reflection?.answer?.trim()
+      ? ""
+      : "There are no answers from the owner yet. Write from the SOURCE alone: explain or share what it is and why it matters for the owner's stack. No first-person claims of experience, and no [ADD: …] placeholders for personal details.",
     PLATFORM_RULES[platform](ctx.post.type),
     STYLE_RULES,
   ]

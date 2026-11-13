@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { QuickPostButton } from "@/features/posts/components/quick-post-button";
 import { formatWeek, STATUS_LABEL, TYPE_LABEL } from "@/features/posts/labels";
 import { getRadarShortlist, getWeekPost } from "@/features/posts/queries";
 import { AnswerForm } from "@/features/reflections/components/forms";
@@ -29,6 +30,8 @@ export default async function HomePage() {
         <p className="text-sm text-muted-foreground">Week of {formatWeek(week)}</p>
         <h1 className="text-2xl font-semibold">This week: {TYPE_LABEL[type]}</h1>
       </header>
+
+      <QuickPostButton />
 
       <Card>
         <CardHeader>
