@@ -186,6 +186,27 @@ Trial meanwhile). The app must run locally in development with no tldraw key.
 **Privacy:** client names must never appear in drafts unless I type them. API keys
 stay server-side. All app routes require my login.
 
+## 8a. Calls made after design review (Claude's calls, owner can override)
+
+- **Proof for "Explain it simply" without a diagram:** the AI may write a short
+  *illustrative* code snippet. It is shown as "AI-written example, approve or edit"
+  and saved as an upload with `is_generated = true`. It must be approved before drafts
+  are generated. The "claims nothing not in the answers" check exempts illustrative
+  code, never experiences or results.
+- **Client names:** no automatic removal (it would change my story). Settings has a
+  "never mention" list (`profile.never_mention`); the slop check flags any draft that
+  contains one of those names. The lessons interview reminds me not to name clients.
+- **Cost:** the Radar uses Firecrawl search results + snippets for all candidates and
+  scrapes full pages only for the shortlist (≤ 5 per week). The full LLM slop review
+  runs on demand and once before finalizing, not on every regenerate. Model is set by
+  `OPENAI_MODEL`.
+- **Blocking vs warning:** slop flags are warnings (fix, regenerate or dismiss).
+  A missing proof element **blocks** finalizing, because §4 calls it a failure.
+
+- **tldraw license (owner's decision):** build on the 100-day Trial key now, move to
+  the Hobby license later. A small "made with tldraw" mark on exported diagrams is
+  acceptable.
+
 ## 9. Left to the builder
 
 - Database schema details, route structure, component breakdown.
