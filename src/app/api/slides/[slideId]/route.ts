@@ -4,7 +4,6 @@ import { requireOwner } from "@/lib/auth";
 import { getSlideForRender } from "@/features/slides/queries";
 import { renderSlide } from "@/features/slides/render";
 
-/** 1080×1350 PNG of one slide. */
 export async function GET(_req: NextRequest, ctx: RouteContext<"/api/slides/[slideId]">) {
   await requireOwner();
   const { slideId } = await ctx.params;

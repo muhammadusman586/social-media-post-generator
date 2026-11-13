@@ -49,7 +49,6 @@ export async function removeUpload(postId: string, uploadId: string) {
   refresh();
 }
 
-/** AI-written illustrative snippet for an explain post; saved unapproved. */
 export async function generateExample(postId: string) {
   await requireOwner();
   const post = await getInterview(id.parse(postId));

@@ -19,7 +19,6 @@ export type Brief = {
 
 const str = (v: unknown) => (typeof v === "string" ? v : "");
 
-/** Firecrawl search with page content; keeps the top pages that have real text. */
 export async function findSources(topic: string, firecrawl: FirecrawlLike): Promise<Page[]> {
   const data = await firecrawl.search(topic, {
     limit: 6,
@@ -48,7 +47,6 @@ const briefSchema = z.object({
   bestSource: z.number().int(),
 });
 
-/** One LLM call that turns the pages into a factual brief the drafts can use as their SOURCE. */
 export async function writeBrief(topic: string, pages: Page[], stack: string[]): Promise<Brief> {
   const { output } = await generateText({
     model: getModel(),
@@ -73,7 +71,6 @@ export async function writeBrief(topic: string, pages: Page[], stack: string[]):
   return output;
 }
 
-/** The radar-item summary the drafts read: brief + example code + source list. */
 export function composeSummary(brief: Pick<Brief, "summary" | "code" | "language">, pages: Page[]): string {
   const parts = [brief.summary.trim()];
   if (brief.code?.trim()) {
@@ -83,7 +80,6 @@ export function composeSummary(brief: Pick<Brief, "summary" | "code" | "language
   return parts.join("\n\n");
 }
 
-/** The page the post links to: the model's pick when valid, else the first. */
 export function bestUrl(brief: Pick<Brief, "bestSource">, pages: Page[]): string {
   return (pages[brief.bestSource] ?? pages[0]).url;
 }

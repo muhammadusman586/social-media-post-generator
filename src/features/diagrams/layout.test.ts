@@ -22,7 +22,7 @@ const grouped: DiagramSpec = {
     { from: "route", to: "model" },
     { from: "route", to: "tool" },
     { from: "tool", to: "db" },
-    { from: "model", to: "hook", label: "stream" }, // cycle back
+    { from: "model", to: "hook", label: "stream" },
     { from: "model", to: "log" },
   ],
   groups: [

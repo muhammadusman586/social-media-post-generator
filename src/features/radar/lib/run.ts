@@ -36,7 +36,6 @@ export async function buildShortlist(input: {
   return shortlist.map((item, i) => ({ ...item, summary: summaries.get(i) ?? item.summary }));
 }
 
-/** Runs the Radar end to end and records it in radar_runs / radar_items. Rethrows on failure. */
 export async function runRadar({ triggerRunId }: { triggerRunId?: string } = {}) {
   const db = getDb();
   const [run] = await db.insert(schema.radarRuns).values({ triggerRunId }).returning({ id: schema.radarRuns.id });

@@ -7,7 +7,6 @@ import { dismissSlopFlag } from "./actions";
 
 type Flag = { id: string; source: "lint" | "llm"; rule: string; quote: string; suggestion: string; dismissed: boolean };
 
-/** Slop warnings for one draft. Fix, regenerate or dismiss; none of them block finalizing. */
 export function FlagList({ flags }: { flags: Flag[] }) {
   const [pending, start] = useTransition();
   const open = flags.filter((f) => !f.dismissed);

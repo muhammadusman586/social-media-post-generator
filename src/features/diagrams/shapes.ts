@@ -19,7 +19,6 @@ export type ShapeInstructions = {
 
 export const nodeShapeId = (id: string) => createShapeId(`node-${id}`);
 
-/** Pure DiagramSpec -> the inputs for editor.createShapes / createBindings, in tldraw's hand-drawn style. */
 export function specToShapes(spec: DiagramSpec): ShapeInstructions {
   const layout = layoutSpec(spec);
 

@@ -4,7 +4,6 @@ import { posts, radarItems, radarRuns, reflections } from "@/db/schema";
 import { weekOf } from "@/lib/week";
 import { decideNewPost, isUuid, type NewPostInput, type SourceRow } from "./new-post";
 
-/** The newest post for a week (default: this week), or undefined. */
 export async function getWeekPost(week: string = weekOf()) {
   const [row] = await getDb()
     .select()
@@ -15,7 +14,6 @@ export async function getWeekPost(week: string = weekOf()) {
   return row;
 }
 
-/** Past posts, newest first, optionally filtered by a title search. */
 export async function listPosts(search = "") {
   const q = search.trim().replace(/[\\%_]/g, "\\$&");
   return getDb()
@@ -26,7 +24,6 @@ export async function listPosts(search = "") {
     .limit(200);
 }
 
-/** Everything the post overview page needs, or undefined for an unknown id. */
 export async function getPostOverview(id: string) {
   if (!isUuid(id)) return undefined;
   return getDb().query.posts.findFirst({

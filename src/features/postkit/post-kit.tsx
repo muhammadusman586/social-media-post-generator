@@ -13,7 +13,6 @@ export type PlatformKit = {
   platform: Platform;
   draftId: string;
   posted: boolean;
-  /** Copy-ready text: one item for LinkedIn/Instagram, one per post for X. */
   texts: string[];
   images: KitImage[];
 };
@@ -47,7 +46,6 @@ export function PostKit({ platforms }: { platforms: PlatformKit[] }) {
  * share sheet if share() runs right after the tap, so files must be ready beforehand.
  */
 function usePrefetchedFiles(images: KitImage[]) {
-  // null while loading
   const [files, setFiles] = useState<Record<string, File> | null>(null);
   const key = images.map((i) => i.url).join("|");
   useEffect(() => {

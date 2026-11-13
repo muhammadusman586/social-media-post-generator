@@ -11,7 +11,6 @@ export type NewPostInput = { type?: PostType; source: NewPostSource };
 type Params = Record<string, string | string[] | undefined>;
 type Parsed = { ok: true; value: NewPostInput } | { ok: false; error: string };
 
-/** Validates the `/posts/new` query string: exactly one of radarItemId / reflectionId, a matching type. */
 export function parseNewPostParams(params: Params): Parsed {
   const get = (key: string) => {
     const v = params[key];

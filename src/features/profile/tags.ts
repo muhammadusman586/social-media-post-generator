@@ -1,7 +1,6 @@
 const MAX_TAGS = 50;
 const MAX_TAG_LENGTH = 80;
 
-/** Splits typed or pasted text into tags (comma or newline separated), trimmed and de-duplicated ignoring case. */
 export function parseTags(input: string): string[] {
   const seen = new Set<string>();
   const tags: string[] = [];

@@ -24,7 +24,6 @@ const SCHEMAS = {
   instagram: z.object({ caption: z.string(), slides: z.array(slideSchema) }),
 };
 
-/** One structured-output call for one platform. */
 export async function generateDraft(
   ctx: DraftContext,
   platform: Platform,

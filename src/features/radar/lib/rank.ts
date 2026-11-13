@@ -63,7 +63,6 @@ function profileText(p: Profile | undefined) {
     .join("\n");
 }
 
-/** One LLM call: pick the 3-5 candidates most worth a post this week for the owner. */
 export async function rankCandidates(
   candidates: Candidate[],
   owner: Profile | undefined,
@@ -93,10 +92,6 @@ ${STYLE}`,
 
 const summariesSchema = z.object({ summaries: z.array(z.object({ index: z.number().int(), summary: z.string() })) });
 
-/**
- * One LLM call that rewrites shortlist summaries from the full scraped pages.
- * Returns index -> summary; items without a page keep their snippet-based summary.
- */
 export async function summarizePages(
   pages: { index: number; title: string; markdown: string }[],
   model: LanguageModel,

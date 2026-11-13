@@ -9,7 +9,6 @@ export const metadata = { title: "New post" };
 
 const FIELDS = ["type", "radarItemId", "reflectionId"] as const;
 
-/** Creates the post (or finds the existing one for that source) on submit, never on GET. */
 async function startPostAction(formData: FormData) {
   "use server";
   await requireOwner();

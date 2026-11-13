@@ -24,7 +24,6 @@ function describeSource({ item, reflection }: QuestionSource): string {
   return "(no source)";
 }
 
-/** 2-3 short interview questions for the post. */
 export async function writeQuestions(src: QuestionSource): Promise<string[]> {
   const { output } = await generateText({
     model: getModel(),
@@ -37,7 +36,6 @@ ${QUESTION_GOALS[src.type]}`,
   return output.questions.map((q) => q.trim()).filter(Boolean).slice(0, 3);
 }
 
-/** A short illustrative code snippet for an explain post with no diagram. */
 export async function writeExample(src: QuestionSource, answers: string[]): Promise<{ code: string; language: string }> {
   const { output } = await generateText({
     model: getModel(),
@@ -49,7 +47,6 @@ export async function writeExample(src: QuestionSource, answers: string[]): Prom
   return { code: output.code.trim(), language: output.language };
 }
 
-/** Lessons proof: do the answers describe a concrete, real situation from the owner's work? */
 export async function checkRealSituation(answers: { question: string; answer: string }[]): Promise<{ ok: boolean; reason: string }> {
   const { output } = await generateText({
     model: getModel(),

@@ -19,7 +19,6 @@ import { pickQuickSource } from "./quick";
 
 export type QuickPostState = { error?: string; postId?: string };
 
-/** One tap: pick a topic, create the post, write all drafts + the diagram, open the drafts page. */
 export async function quickPost(): Promise<QuickPostState> {
   await requireOwner();
   const [radar, answered] = await Promise.all([getRadarShortlist(1), listAnswered()]);
@@ -32,7 +31,6 @@ export async function quickPost(): Promise<QuickPostState> {
   return writeWholePost(input);
 }
 
-/** Research a topic with Firecrawl, save it as a topic radar item, then write the whole post. */
 export async function topicPost(_prev: QuickPostState, formData: FormData): Promise<QuickPostState> {
   await requireOwner();
   const parsed = z.string().trim().min(3).max(200).safeParse(formData.get("topic"));
@@ -72,7 +70,6 @@ export async function topicPost(_prev: QuickPostState, formData: FormData): Prom
   return writeWholePost({ source: { kind: "radar", id: itemId } });
 }
 
-/** Create the post, then write all drafts + the diagram in parallel and open the drafts page. */
 async function writeWholePost(input: NewPostInput): Promise<QuickPostState> {
   const started = await startPost(input);
   if ("error" in started) return { error: started.error };

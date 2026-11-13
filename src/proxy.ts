@@ -4,7 +4,6 @@ import { isOwner } from "@/lib/auth";
 
 const PUBLIC_PATHS = ["/sign-in", "/not-allowed"];
 
-/** Every route needs a signed-in Clerk user, and that user must be the owner. */
 export default clerkMiddleware(
   async (auth, req) => {
     const { pathname } = req.nextUrl;

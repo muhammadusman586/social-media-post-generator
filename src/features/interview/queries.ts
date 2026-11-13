@@ -2,7 +2,6 @@ import { and, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { interviewQas, posts, uploads } from "@/db/schema";
 
-/** Post with its source, questions, uploads and whether a diagram exists. */
 export async function getInterview(postId: string) {
   return getDb().query.posts.findFirst({
     where: eq(posts.id, postId),
@@ -50,7 +49,6 @@ export async function deleteUpload(postId: string, id: string) {
   return row;
 }
 
-/** Approve an AI-written example, saving the owner's edits. */
 export async function approveExample(postId: string, id: string, codeText: string) {
   await getDb()
     .update(uploads)

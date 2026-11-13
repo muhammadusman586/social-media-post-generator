@@ -36,7 +36,6 @@ export function xLength(text: string): number {
   return len;
 }
 
-/** Thread posts ready to copy: "n/N" appended unless the post already carries it. One post stays as is. */
 export function formatThread(posts: string[]): string[] {
   const clean = posts.map((p) => p.trim()).filter(Boolean);
   const n = clean.length;
@@ -49,7 +48,6 @@ export function formatThread(posts: string[]): string[] {
 
 type DraftLike = { platform: Platform; version: number; isFinal: boolean; postedAt: Date | null };
 
-/** The newest final draft per platform. Platforms with no final are absent. */
 export function latestFinals<T extends DraftLike>(drafts: T[]): Partial<Record<Platform, T>> {
   const out: Partial<Record<Platform, T>> = {};
   for (const d of drafts) {
@@ -60,7 +58,6 @@ export function latestFinals<T extends DraftLike>(drafts: T[]): Partial<Record<P
   return out;
 }
 
-/** True when there is at least one final and every final is marked posted. */
 export function allPosted(finals: Partial<Record<Platform, DraftLike>>): boolean {
   const list = Object.values(finals);
   return list.length > 0 && list.every((d) => d?.postedAt);

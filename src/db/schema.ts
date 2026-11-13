@@ -1,12 +1,3 @@
-/**
- * Brand Studio database schema (Drizzle, Postgres on Neon).
- *
- * Owned by phase 0. Feature agents: do not edit concurrently. If you truly need a
- * change, append it at the bottom in a clearly marked block and run `npm run db:generate`.
- *
- * Column names: TS keys are camelCase, DB columns are snake_case (`casing: "snake_case"`
- * is set in both src/db/index.ts and drizzle.config.ts).
- */
 import { relations } from "drizzle-orm";
 import {
   boolean,
@@ -22,8 +13,6 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
-// ---------- enums ----------
-
 export const postType = pgEnum("post_type", ["explain", "tried", "lessons"]);
 export const postStatus = pgEnum("post_status", ["draft", "interview", "drafted", "posted"]);
 export const platform = pgEnum("platform", ["linkedin", "x", "instagram"]);
@@ -34,12 +23,9 @@ export type PostType = (typeof postType.enumValues)[number];
 export type PostStatus = (typeof postStatus.enumValues)[number];
 export type Platform = (typeof platform.enumValues)[number];
 
-// ---------- json column shapes ----------
-
 /** linkedin: `text`. x: `posts` (1 item = single post, 3-6 = thread). instagram: `caption` (slides live in `slides`). */
 export type DraftContent = { text?: string; posts?: string[]; caption?: string };
 
-/** Structured diagram returned by the LLM; laid out into tldraw shapes by the diagrams feature. */
 export type DiagramSpec = {
   title?: string;
   nodes: { id: string; label: string; group?: string }[];
@@ -56,8 +42,6 @@ export type SlideContent = {
   imageUrl?: string;
 };
 
-// ---------- shared columns ----------
-
 const id = () => uuid().primaryKey().defaultRandom();
 const createdAt = () => timestamp({ withTimezone: true }).notNull().defaultNow();
 const updatedAt = () =>
@@ -67,19 +51,15 @@ const updatedAt = () =>
     .$onUpdate(() => new Date());
 const textList = () => text().array().notNull().default([]);
 
-// ---------- profile & voice ----------
-
 /** Single row: the owner's profile. */
 export const profile = pgTable("profile", {
   id: id(),
   handle: text().notNull().default(""),
   bio: text().notNull().default(""),
   stack: textList(),
-  /** Free text: the owner's projects, one per line or short paragraphs. */
   projects: text().notNull().default(""),
   topics: textList(),
   avoidTopics: textList(),
-  /** Client/company names the slop check flags if they appear in any draft. */
   neverMention: textList(),
   createdAt: createdAt(),
   updatedAt: updatedAt(),
@@ -89,13 +69,10 @@ export const voiceExamples = pgTable("voice_examples", {
   id: id(),
   text: text().notNull(),
   source: voiceSource().notNull(),
-  /** Set when source = 'final_post'. */
   postId: uuid().references(() => posts.id, { onDelete: "set null" }),
   platform: platform(),
   createdAt: createdAt(),
 });
-
-// ---------- radar ----------
 
 export const sources = pgTable("sources", {
   id: id(),
@@ -138,9 +115,6 @@ export const radarItems = pgTable("radar_items", {
   createdAt: createdAt(),
 });
 
-// ---------- reflections ----------
-
-/** Reflection bank. Seeded questions have answer = null until answered. */
 export const reflections = pgTable("reflections", {
   id: id(),
   question: text().notNull(),
@@ -149,8 +123,6 @@ export const reflections = pgTable("reflections", {
   answeredAt: timestamp({ withTimezone: true }),
   createdAt: createdAt(),
 });
-
-// ---------- posts ----------
 
 export const posts = pgTable("posts", {
   id: id(),
@@ -186,11 +158,8 @@ export const uploads = pgTable("uploads", {
     .notNull()
     .references(() => posts.id, { onDelete: "cascade" }),
   kind: uploadKind().notNull(),
-  /** Vercel Blob URL (images). */
   blobUrl: text(),
-  /** Pasted code (kind 'code'). */
   codeText: text(),
-  /** True when the AI wrote an illustrative snippet the owner must approve. */
   isGenerated: boolean().notNull().default(false),
   /** Set when the owner approves an AI-written snippet; drafts need it when isGenerated. */
   approvedAt: timestamp({ withTimezone: true }),
@@ -256,8 +225,6 @@ export const slides = pgTable(
   },
   (t) => [unique().on(t.postId, t.order)],
 );
-
-// ---------- relations (for db.query.*.findMany({ with: ... })) ----------
 
 export const radarRunsRelations = relations(radarRuns, ({ many }) => ({ items: many(radarItems) }));
 

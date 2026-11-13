@@ -14,12 +14,10 @@ export function weekOf(now: Date = new Date()): string {
   return day.toISOString().slice(0, 10);
 }
 
-/** 1-based week of month of a week_of Monday: days 1-7 -> 1, 8-14 -> 2, ... */
 export function weekOfMonth(weekOfDate: string): number {
   return Math.ceil(Number(weekOfDate.slice(8, 10)) / 7);
 }
 
-/** Suggested post type for a week (the owner can switch it). */
 export function defaultPostType(weekOfDate: string = weekOf()): PostType {
   return ROTATION[Math.min(weekOfMonth(weekOfDate), ROTATION.length) - 1];
 }

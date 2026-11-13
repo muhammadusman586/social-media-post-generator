@@ -42,7 +42,6 @@ export async function addVoiceSample(form: FormData): Promise<ActionResult> {
   return {};
 }
 
-/** Deletes a pasted sample. Final-post examples are not deletable here. */
 export async function deleteVoiceSample(form: FormData): Promise<ActionResult> {
   await requireOwner();
   const id = form.get("id");

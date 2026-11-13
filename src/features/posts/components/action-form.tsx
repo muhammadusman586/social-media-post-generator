@@ -9,15 +9,12 @@ type Props = {
   action: (form: FormData) => Promise<{ error?: string }>;
   submitLabel: string;
   submitVariant?: "default" | "outline" | "ghost" | "destructive";
-  /** Toast shown on success. */
   success?: string;
-  /** Clear the fields on success (add forms). Errors never clear what was typed. */
   reset?: boolean;
   className?: string;
   children?: ReactNode;
 };
 
-/** A form that calls a server action, keeps input on error and toasts the result. */
 export function ActionForm({ action, submitLabel, submitVariant, success, reset, className, children }: Props) {
   const [pending, startTransition] = useTransition();
 

@@ -19,7 +19,6 @@ export type ProofInput = {
   type: PostType;
   uploads: ProofUpload[];
   hasDiagram: boolean;
-  /** Result of the lessons LLM check; undefined when not run. */
   realSituation?: { ok: boolean; reason: string };
 };
 
@@ -27,13 +26,11 @@ const hasContent = (u: ProofUpload) => Boolean(u.kind === "image" ? u.blobUrl : 
 const ownUpload = (u: ProofUpload) => !u.isGenerated && hasContent(u);
 const pendingExample = (u: ProofUpload) => u.isGenerated && !u.approvedAt;
 
-/** Why drafts cannot be generated yet, or null when they can. */
 export function draftBlocker({ uploads }: ProofInput): string | null {
   if (uploads.some(pendingExample)) return "Approve or delete the AI-written example first.";
   return null;
 }
 
-/** Why the proof element is missing, or null when it is present. */
 export function proofMissing({ type, uploads, hasDiagram, realSituation }: ProofInput): string | null {
   if (type === "tried") return null; // optional: no proof means a "first look" post
   if (type === "explain") {

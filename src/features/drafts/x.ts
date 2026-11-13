@@ -1,5 +1,3 @@
-/** X (Twitter) post limits and thread editing helpers. Pure, safe on client and server. */
-
 export const X_LIMIT = 280;
 export const THREAD_MIN = 3;
 export const THREAD_MAX = 6;
@@ -40,7 +38,6 @@ export function formatThread(posts: string[]): string {
 
 export type XIssue = { rule: string; quote: string; suggestion: string };
 
-/** Length and thread-size problems: 1 post ≤ 280, or a 3-6 post thread with room for " i/n". */
 export function xIssues(posts: string[]): XIssue[] {
   const issues: XIssue[] = [];
   const limit = xLimit(posts.length);

@@ -40,7 +40,6 @@ export function buildPrompt(src: DiagramSource, force: boolean): string {
   return parts.join("\n\n");
 }
 
-/** Asks the model for a diagram. `model` is injectable for tests; callers pass getModel(). */
 export async function proposeDiagramSpec(
   src: DiagramSource,
   { force, model }: { force: boolean; model: LanguageModel },

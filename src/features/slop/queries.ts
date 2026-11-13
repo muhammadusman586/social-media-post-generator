@@ -3,7 +3,6 @@ import { getDb } from "@/db";
 import { slopFlags } from "@/db/schema";
 import type { LintFlag } from "./lint";
 
-/** Replace one source's flags on the given drafts. */
 export async function replaceFlags(source: "lint" | "llm", rows: { draftId: string; flags: LintFlag[] }[]) {
   const db = getDb();
   const ids = rows.map((r) => r.draftId);

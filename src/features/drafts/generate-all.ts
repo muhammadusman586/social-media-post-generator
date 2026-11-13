@@ -5,7 +5,6 @@ import { generateDraft, type GeneratedDraft } from "./generate";
 import type { DraftContext } from "./prompt";
 import { getDraftContext, getSlides, insertDraft, markDrafted, replaceSlides } from "./queries";
 
-/** Save a generated or edited draft as a new version, with slides and lint flags. */
 export async function storeDraft(ctx: DraftContext, postId: string, platform: Platform, draft: GeneratedDraft) {
   const row = await insertDraft(postId, platform, draft.content);
   let slides: SlideContent[] = [];

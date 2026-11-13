@@ -43,7 +43,6 @@ export async function proposeDiagram(postId: string, force: boolean): Promise<Pr
   }
 }
 
-/** Autosave target for the canvas. */
 export async function saveSnapshot(postId: string, snapshot: unknown): Promise<void> {
   await requireOwner();
   if (typeof snapshot !== "object" || snapshot === null) throw new Error("Bad snapshot");

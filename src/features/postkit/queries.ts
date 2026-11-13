@@ -3,7 +3,6 @@ import { getDb } from "@/db";
 import { diagrams, drafts, posts, slides } from "@/db/schema";
 import { latestFinals } from "./lib";
 
-/** The post, its newest final draft per platform, slide ids and the diagram png. Null if no post. */
 export async function getKit(postId: string) {
   const db = getDb();
   const [post] = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);
@@ -27,7 +26,6 @@ export async function getKit(postId: string) {
   };
 }
 
-/** Final drafts of a post (all versions), for the "all posted" check. */
 export async function getFinalDrafts(postId: string) {
   return latestFinals(await getDb().select().from(drafts).where(eq(drafts.postId, postId)));
 }

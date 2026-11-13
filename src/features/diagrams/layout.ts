@@ -8,13 +8,10 @@ export type DiagramLayout = { nodes: PlacedNode[]; groups: PlacedGroup[]; width:
 export const NODE_W = 240;
 export const NODE_H = 110;
 const GAP_X = 60;
-/** Room for arrow labels between layers. */
 const GAP_Y = 120;
 const GROUP_PAD = 30;
-/** Label sits bottom-left: arrows usually enter a group from the top. */
 const GROUP_LABEL = 50;
 
-/** Layer of each node: longest path from a root, with back edges (cycles) ignored. */
 export function rankNodes(spec: DiagramSpec): Map<string, number> {
   const out = new Map(spec.nodes.map((n) => [n.id, [] as string[]]));
   for (const e of spec.edges) out.get(e.from)?.push(e.to);
@@ -106,7 +103,6 @@ export function layoutSpec(spec: DiagramSpec): DiagramLayout {
   return { nodes, groups: placedGroups, width: x - GAP_X, height };
 }
 
-/** Grows `b` (plus padding) to the 1080x1350 slide ratio, keeping it centred. */
 export function portraitBox(b: Box, padding = 48, ratio = 1080 / 1350): Box {
   let w = b.w + padding * 2;
   let h = b.h + padding * 2;

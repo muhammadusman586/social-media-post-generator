@@ -42,7 +42,6 @@ describe("decideNewPost", () => {
       action: "existing",
       postId: "post-1",
     });
-    // even when the source row is gone
     expect(decideNewPost(radar, undefined, "post-1")).toEqual({ action: "existing", postId: "post-1" });
   });
 

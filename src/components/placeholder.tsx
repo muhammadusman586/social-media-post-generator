@@ -1,4 +1,3 @@
-/** Temporary page body. Each feature agent replaces the page that renders it. */
 export function Placeholder({ title, owner }: { title: string; owner: string }) {
   return (
     <section className="flex flex-col gap-2">

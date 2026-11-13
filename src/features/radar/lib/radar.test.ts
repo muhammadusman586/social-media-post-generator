@@ -16,7 +16,6 @@ const source = (over: Partial<Source>): Source => ({
   ...over,
 });
 
-/** Fake Firecrawl: listing markdown by URL; search returns `web`. */
 function fakeFirecrawl(pages: Record<string, string>, web: { url: string; title: string; description?: string }[] = []) {
   return {
     search: vi.fn(async () => ({ web })),
@@ -27,7 +26,6 @@ function fakeFirecrawl(pages: Record<string, string>, web: { url: string; title:
   } as unknown as FirecrawlLike & { search: ReturnType<typeof vi.fn>; scrape: ReturnType<typeof vi.fn> };
 }
 
-/** Mock model that answers each call with the next JSON value. */
 function mockModel(...outputs: unknown[]) {
   let call = 0;
   return new MockLanguageModelV4({
@@ -175,7 +173,7 @@ describe("buildShortlist", () => {
     });
 
     expect(list).toHaveLength(5);
-    expect(fc.scrape).toHaveBeenCalledTimes(1 + 5); // listing + shortlist only
+    expect(fc.scrape).toHaveBeenCalledTimes(1 + 5);
     expect(list[0].summary).toBe("From the page.");
     expect(list[1].summary).toBe("What it is.");
   });

@@ -3,7 +3,7 @@ import { defaultPostType, weekOf } from "./week";
 
 describe("weekOf", () => {
   it("returns the Monday of the current week", () => {
-    expect(weekOf(new Date("2026-11-13T09:00:00Z"))).toBe("2026-11-09"); // Friday
+    expect(weekOf(new Date("2026-11-13T09:00:00Z"))).toBe("2026-11-09");
     expect(weekOf(new Date("2026-11-09T00:00:00Z"))).toBe("2026-11-09"); // Monday 05:00 PKT
   });
 

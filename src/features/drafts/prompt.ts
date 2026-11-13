@@ -43,7 +43,6 @@ const PLATFORM_RULES: Record<Platform, (type: PostType) => string> = {
 
 const section = (title: string, body: string) => `## ${title}\n${body.trim()}\n`;
 
-/** Instructions + prompt for one platform. Only allowed facts go into `prompt`. */
 export function buildDraftPrompt(
   ctx: DraftContext,
   platform: Platform,

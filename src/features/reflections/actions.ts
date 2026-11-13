@@ -11,7 +11,6 @@ export type ActionResult = { error?: string };
 
 const field = (form: FormData, name: string, max: number) => String(form.get(name) ?? "").trim().slice(0, max);
 
-/** Saves (or edits) the answer to a reflection question. */
 export async function answerReflection(form: FormData): Promise<ActionResult> {
   await requireOwner();
   const id = form.get("id");
@@ -29,7 +28,6 @@ export async function answerReflection(form: FormData): Promise<ActionResult> {
   return {};
 }
 
-/** Adds the owner's own question to the reflection bank. */
 export async function addQuestion(form: FormData): Promise<ActionResult> {
   await requireOwner();
   const question = field(form, "question", 300);

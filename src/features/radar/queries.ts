@@ -20,7 +20,6 @@ export function listSources() {
   return getDb().select().from(schema.sources).orderBy(asc(schema.sources.createdAt), asc(schema.sources.name));
 }
 
-/** For other features (e.g. posts/new?radarItemId=...). */
 export function getRadarItem(id: string) {
   return getDb().query.radarItems.findFirst({ where: eq(schema.radarItems.id, id) });
 }

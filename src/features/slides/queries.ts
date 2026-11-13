@@ -2,7 +2,6 @@ import { asc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { diagrams, profile, slides } from "@/db/schema";
 
-/** Everything the slide route needs to draw one slide, or null if it does not exist. */
 export async function getSlideForRender(slideId: string) {
   const db = getDb();
   const [slide] = await db.select().from(slides).where(eq(slides.id, slideId)).limit(1);

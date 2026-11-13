@@ -2,7 +2,6 @@ import { asc, desc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { profile, voiceExamples } from "@/db/schema";
 
-/** The single profile row, or undefined before the first save. */
 export async function getProfile() {
   const [row] = await getDb().select().from(profile).orderBy(asc(profile.createdAt)).limit(1);
   return row;

@@ -107,7 +107,6 @@ export default function DiagramEditor({ postId, spec, snapshot, pngUrl }: Props)
   const preview = local ?? saved;
   return (
     <div className="flex flex-col gap-4">
-      {/* Full-bleed past the narrow column: the laptop is the main editing device. */}
       <div className="relative left-1/2 h-[70dvh] w-[calc(100vw-2rem)] max-w-6xl -translate-x-1/2 overflow-hidden rounded-lg border">
         <Tldraw
           licenseKey={process.env.NEXT_PUBLIC_TLDRAW_LICENSE_KEY}

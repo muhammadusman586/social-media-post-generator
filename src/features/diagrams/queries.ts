@@ -2,12 +2,10 @@ import { eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { diagrams, type DiagramSpec } from "@/db/schema";
 
-/** The diagram row for a post, or undefined. Other features (slides) read `pngUrl` from here. */
 export async function getDiagram(postId: string) {
   return getDb().query.diagrams.findFirst({ where: (d, { eq }) => eq(d.postId, postId) });
 }
 
-/** Post + the material the diagram may use + the current diagram. */
 export async function getDiagramPageData(postId: string) {
   return getDb().query.posts.findFirst({
     where: (p, { eq }) => eq(p.id, postId),

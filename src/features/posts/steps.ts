@@ -11,7 +11,6 @@ export type StepInput = {
 
 export type Step = { key: string; label: string; href: string; done: boolean };
 
-/** The post's workflow steps, with done state read from what is saved. */
 export function postSteps(p: StepInput): Step[] {
   const base = `/posts/${p.id}`;
   const finals = p.drafts.filter((d) => d.isFinal);

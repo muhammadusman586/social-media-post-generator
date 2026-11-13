@@ -19,7 +19,6 @@ export function slideTemplate(
   return kind;
 }
 
-/** Shrinks the font as text gets longer so it stays inside the 1080×1350 frame. */
 export function fitFontSize(text: string, max: number, min: number): number {
   const len = text.length;
   if (len <= 60) return max;

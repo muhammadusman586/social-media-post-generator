@@ -14,7 +14,6 @@ import { getInterview, type Interview } from "@/features/interview/queries";
 import type { DraftContext } from "./prompt";
 import type { SlideKind } from "./generate";
 
-/** Everything a draft may be built from, plus the post row. Null when the post is missing. */
 export async function getDraftContext(postId: string): Promise<{ post: Interview; ctx: DraftContext } | null> {
   const db = getDb();
   const [post, [owner], samples, finals] = await Promise.all([
@@ -39,7 +38,6 @@ export async function getDraftContext(postId: string): Promise<{ post: Interview
   };
 }
 
-/** Latest version per platform, with its slop flags. */
 export async function getLatestDrafts(postId: string) {
   const rows = await getDb().query.drafts.findMany({
     where: eq(drafts.postId, postId),
@@ -57,7 +55,6 @@ export async function getSlides(postId: string) {
   return getDb().select().from(slides).where(eq(slides.postId, postId)).orderBy(slides.order);
 }
 
-/** Insert the next version for a platform. */
 export async function insertDraft(postId: string, platform: Platform, content: DraftContent) {
   const db = getDb();
   const [{ v }] = await db
@@ -71,7 +68,6 @@ export async function insertDraft(postId: string, platform: Platform, content: D
   return row;
 }
 
-/** Replace the post's slides. PNGs are rendered later by the slides feature. */
 export async function replaceSlides(postId: string, next: { kind: SlideKind; content: SlideContent }[]) {
   const db = getDb();
   const del = db.delete(slides).where(eq(slides.postId, postId));
@@ -90,7 +86,6 @@ export async function markDrafted(postId: string) {
     .where(and(eq(posts.id, postId), inArray(posts.status, ["draft", "interview"])));
 }
 
-/** Mark the given drafts final and store their text as voice examples. */
 export async function finalizeDrafts(postId: string, finals: { id: string; platform: Platform; text: string }[]) {
   const db = getDb();
   await db.batch([

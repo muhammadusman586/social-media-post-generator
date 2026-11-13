@@ -10,7 +10,6 @@ export type LintFlag = { rule: string; quote: string; suggestion: string };
 
 type Rule = { rule: string; re: RegExp; suggestion: string };
 
-/** Alternation of phrases, matched on word boundaries, case-insensitive. */
 const words = (list: string[]) => new RegExp(`\\b(?:${list.join("|")})\\b`, "gi");
 
 const RULES: Rule[] = [
@@ -169,7 +168,6 @@ const PLACEHOLDER = /\[ADD:[^\]\n]*\]?/g;
 const EMOJI_LINE = /^\s*\p{Extended_Pictographic}/u;
 const HASHTAG = /(?:^|\s)(#[\p{L}\p{N}_]+)/gu;
 
-/** The whole line around `index`, trimmed and capped, so the owner can find it. */
 function lineAt(text: string, index: number): string {
   const start = text.lastIndexOf("\n", index - 1) + 1;
   const end = text.indexOf("\n", index);
@@ -179,12 +177,10 @@ function lineAt(text: string, index: number): string {
 
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-/** True when text still has an `[ADD: …]` placeholder. */
 export function hasPlaceholder(text: string): boolean {
   return /\[ADD:/.test(text);
 }
 
-/** Lint one block of text (a LinkedIn post, an X post, a caption, a slide). */
 export function lintText(raw: string, neverMention: string[] = []): LintFlag[] {
   const text = raw.replace(/[‘’]/g, "'");
   const flags: LintFlag[] = [];
@@ -234,7 +230,6 @@ function dedupe(flags: LintFlag[]): LintFlag[] {
   });
 }
 
-/** Lint a whole platform draft (and Instagram slides). */
 export function lintDraft(
   platform: Platform,
   content: DraftContent,

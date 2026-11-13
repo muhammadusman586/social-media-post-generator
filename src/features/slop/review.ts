@@ -26,7 +26,6 @@ const schema = z.object({
   ),
 });
 
-/** One LLM call that reviews every platform draft. Returns warnings only. */
 export async function reviewDrafts(input: ReviewInput): Promise<ReviewFlag[]> {
   const { output } = await generateText({
     model: getModel(),

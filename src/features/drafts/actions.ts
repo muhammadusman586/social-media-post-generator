@@ -42,7 +42,6 @@ async function loadContext(postId: string) {
 
 const store = storeDraft;
 
-/** First generation: all three platforms in parallel. Answers are optional (drafts from the source alone). */
 export async function generateDrafts(postId: string): Promise<Result> {
   await requireOwner();
   const { post, ctx } = await loadContext(postId);
@@ -70,7 +69,6 @@ export async function regenerateDraft(postId: string, platform: Platform, instru
   return {};
 }
 
-/** Inline edit: saves a new version (and the Instagram slides). */
 export async function saveDraft(
   postId: string,
   platform: Platform,
@@ -88,7 +86,6 @@ export async function saveDraft(
   return {};
 }
 
-/** LLM slop review of the latest drafts; replaces earlier LLM flags. Warnings only. */
 async function review(ctx: DraftContext, postId: string) {
   const latest = await getLatestDrafts(postId);
   const slides = (await getSlides(postId)).map((s) => s.content);
@@ -131,7 +128,6 @@ export async function reviewWithAi(postId: string): Promise<Result> {
   return {};
 }
 
-/** Blocks on missing proof or [ADD: …] placeholders; runs the LLM review once; marks finals. */
 export async function finalizePost(postId: string): Promise<{ blockers?: string[] }> {
   await requireOwner();
   const { post, ctx } = await loadContext(postId);

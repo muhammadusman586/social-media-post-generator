@@ -9,7 +9,6 @@ import { requireOwner } from "@/lib/auth";
 import { allPosted } from "./lib";
 import { getFinalDrafts } from "./queries";
 
-/** Marks one platform's final draft as posted (or not), then syncs posts.status. */
 export async function markPosted(draftId: string, posted: boolean) {
   await requireOwner();
   const id = z.uuid().parse(draftId);

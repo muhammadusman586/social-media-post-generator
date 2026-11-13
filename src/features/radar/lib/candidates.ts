@@ -12,7 +12,6 @@ export const SOURCE_KINDS: { value: Source["kind"]; label: string }[] = [
   { value: "github_trending", label: "GitHub trending" },
 ];
 
-/** Newest links kept per source. Listing pages put the newest first. */
 export const PER_SOURCE = 8;
 const SNIPPET_CHARS = 280;
 
@@ -38,7 +37,6 @@ const GITHUB_RESERVED = new Set([
   "marketplace", "orgs", "pricing", "settings", "signup", "site", "sponsors", "topics", "trending",
 ]);
 
-/** Which links on a listing page are posts/releases/stories, by source kind. */
 function keepLink(kind: Source["kind"], link: URL, listing: URL, strict: boolean): boolean {
   const parts = link.pathname.split("/").filter(Boolean);
   switch (kind) {
@@ -64,7 +62,6 @@ const stripMarkdown = (s: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-/** Pulls [title](url) links from a scraped listing page, with nearby text as the snippet. */
 export function linksFromListing(markdown: string, source: Source): Candidate[] {
   if (!source.url) return [];
   const listing = new URL(source.url);
@@ -91,7 +88,6 @@ export function linksFromListing(markdown: string, source: Source): Candidate[] 
     .map(({ url, title, snippet }) => ({ url, title, snippet, sourceId: source.id }));
 }
 
-/** Candidates from one source: Firecrawl search for 'search', a listing-page scrape for the rest. */
 export async function candidatesFromSource(source: Source, firecrawl: FirecrawlLike): Promise<Candidate[]> {
   if (source.kind === "search") {
     if (!source.query) return [];
