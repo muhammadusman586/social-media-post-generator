@@ -1,0 +1,1 @@
+ALTER TABLE "uploads" ADD COLUMN "approved_at" timestamp with time zone;

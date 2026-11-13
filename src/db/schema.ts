@@ -190,6 +190,8 @@ export const uploads = pgTable("uploads", {
   codeText: text(),
   /** True when the AI wrote an illustrative snippet the owner must approve. */
   isGenerated: boolean().notNull().default(false),
+  /** Set when the owner approves an AI-written snippet; drafts need it when isGenerated. */
+  approvedAt: timestamp({ withTimezone: true }),
   createdAt: createdAt(),
 });
 
