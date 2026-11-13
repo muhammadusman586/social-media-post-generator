@@ -17,6 +17,7 @@ const SYSTEM = `You decide whether a diagram helps a short social post, and if s
 Rules:
 - Use only facts in the material below. Do not add tools, steps, numbers or components that are not there.
 - Box labels: 2-5 words, wording taken from the material. Edge labels: 1-3 words or null.
+- All labels and the title are in English. Answers may be in Roman Urdu or mixed; translate them, keeping technical terms (e.g. 'use client', useState) as written.
 - At most ${MAX_NODES} boxes. Groups only when the material names distinct parts (e.g. client vs server).
 - A diagram is useful when the post explains a flow, an architecture, or how parts relate. Opinions, stories and single facts don't need one.
 - reason: one plain sentence, no hype.`;

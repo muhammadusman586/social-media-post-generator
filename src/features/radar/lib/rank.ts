@@ -80,7 +80,7 @@ funding/business news, and near-duplicates of each other.
 For each pick:
 - title: a short, plain title for the item.
 - summary: 2-3 sentences on what it is, using only the candidate's own text.
-- whyItMatters: one line to the owner ("you"), saying how it touches their stack or topics.
+- whyItMatters: one line to the owner ("you"), naming the specific part of their stack or work it touches and what they would do or see differently (e.g. "Your Trigger.dev tasks could call OpenAI without a stored key"). Don't start with "You could"; no generic "try it in your workflow".
 - suggestedType: "tried" for a new release, tool or library they can try hands-on; "explain" for a concept, technique or idea.
 - score: 0 to 1, how good a fit it is.
 ${STYLE}`,
