@@ -1,13 +1,14 @@
-import { asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, isNull } from "drizzle-orm";
 import { getDb, schema } from "@/db";
 
-/** Latest run (for its status) and the shortlist of the latest finished run. */
+/** Latest weekly run (for its status) and the shortlist of the latest finished one. Topic runs are excluded. */
 export async function getRadarView() {
   const db = getDb();
+  const weekly = isNull(schema.radarRuns.topic);
   const [latest, lastDone] = await Promise.all([
-    db.query.radarRuns.findFirst({ orderBy: desc(schema.radarRuns.startedAt) }),
+    db.query.radarRuns.findFirst({ where: weekly, orderBy: desc(schema.radarRuns.startedAt) }),
     db.query.radarRuns.findFirst({
-      where: eq(schema.radarRuns.status, "done"),
+      where: and(weekly, eq(schema.radarRuns.status, "done")),
       orderBy: desc(schema.radarRuns.startedAt),
       with: { items: { orderBy: desc(schema.radarItems.score) } },
     }),

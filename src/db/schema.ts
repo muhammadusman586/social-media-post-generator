@@ -114,6 +114,8 @@ export const radarRuns = pgTable("radar_runs", {
   status: text({ enum: ["running", "done", "failed"] }).notNull().default("running"),
   error: text(),
   triggerRunId: text(),
+  /** Set for on-demand topic research runs; weekly radar runs leave it null. */
+  topic: text(),
   startedAt: createdAt(),
   finishedAt: timestamp({ withTimezone: true }),
 });

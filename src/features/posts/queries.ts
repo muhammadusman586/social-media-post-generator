@@ -1,4 +1,4 @@
-import { and, desc, eq, ilike, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, isNull, sql } from "drizzle-orm";
 import { getDb } from "@/db";
 import { posts, radarItems, radarRuns, reflections } from "@/db/schema";
 import { weekOf } from "@/lib/week";
@@ -51,7 +51,7 @@ export async function getRadarShortlist(limit = 3) {
   const [run] = await db
     .select({ id: radarRuns.id })
     .from(radarRuns)
-    .where(eq(radarRuns.status, "done"))
+    .where(and(eq(radarRuns.status, "done"), isNull(radarRuns.topic)))
     .orderBy(desc(radarRuns.startedAt))
     .limit(1);
   if (!run) return [];

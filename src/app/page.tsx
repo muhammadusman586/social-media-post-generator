@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { QuickPostButton } from "@/features/posts/components/quick-post-button";
+import { TopicPostForm } from "@/features/posts/components/topic-post-form";
 import { formatWeek, STATUS_LABEL, TYPE_LABEL } from "@/features/posts/labels";
 import { getRadarShortlist, getWeekPost } from "@/features/posts/queries";
 import { AnswerForm } from "@/features/reflections/components/forms";
@@ -32,6 +33,7 @@ export default async function HomePage() {
       </header>
 
       <QuickPostButton />
+      <TopicPostForm />
 
       <Card>
         <CardHeader>

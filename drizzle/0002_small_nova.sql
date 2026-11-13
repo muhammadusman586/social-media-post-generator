@@ -1,0 +1,1 @@
+ALTER TABLE "radar_runs" ADD COLUMN "topic" text;

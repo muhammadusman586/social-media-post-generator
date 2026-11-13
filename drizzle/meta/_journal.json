@@ -15,6 +15,13 @@
       "when": 1794586817597,
       "tag": "0001_busy_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794591314438,
+      "tag": "0002_small_nova",
+      "breakpoints": true
     }
   ]
 }
