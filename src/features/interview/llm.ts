@@ -13,7 +13,7 @@ const QUESTION_GOALS: Record<PostType, string> = {
   explain:
     'Get the owner\'s own explanation and real context. Examples: "How would you explain this to a junior?", "Where have you seen it used or used it yourself?"',
   tried:
-    'Get what the owner actually did. Examples: "What did you build or try?", "What worked?", "What broke or surprised you?"',
+    'Get what the owner did, or plans to do if they have not tried it yet. Examples: "Have you tried it yet? If yes, what did you build?", "What worked or broke?", "If not yet, what would you try it on first?"',
   lessons:
     'Get one concrete situation from the owner\'s work behind the reflection: what happened, what they did, what changed after. Remind them to leave out client names.',
 };

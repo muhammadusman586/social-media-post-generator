@@ -43,7 +43,7 @@ export function ProofPanel({ post }: { post: Interview }) {
         <h2 className="text-lg font-semibold">Proof</h2>
         <p className="text-sm text-muted-foreground">
           {post.type === "tried"
-            ? "Required: a screenshot or code from what you tried."
+            ? "Optional: a screenshot or code once you've tried it. Without it you get a first-look post; add it later and regenerate."
             : "Needed before finalizing: a diagram or a code snippet."}
         </p>
       </div>

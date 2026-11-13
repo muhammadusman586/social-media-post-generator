@@ -1,6 +1,6 @@
 /**
  * Proof rules (requirements §4, §5, §8a). Pure, safe on client and server.
- * - tried: the owner's own screenshot or pasted code.
+ * - tried: optional. Without the owner's screenshot/code the drafts become a "first look".
  * - explain: a diagram, the owner's own upload, or an approved AI-written example.
  * - lessons: a real situation in the answers, judged by an LLM check at finalize.
  */
@@ -28,17 +28,14 @@ const ownUpload = (u: ProofUpload) => !u.isGenerated && hasContent(u);
 const pendingExample = (u: ProofUpload) => u.isGenerated && !u.approvedAt;
 
 /** Why drafts cannot be generated yet, or null when they can. */
-export function draftBlocker({ type, uploads }: ProofInput): string | null {
+export function draftBlocker({ uploads }: ProofInput): string | null {
   if (uploads.some(pendingExample)) return "Approve or delete the AI-written example first.";
-  if (type === "tried" && !uploads.some(ownUpload)) return "Add a screenshot or paste code from what you tried.";
   return null;
 }
 
 /** Why the proof element is missing, or null when it is present. */
 export function proofMissing({ type, uploads, hasDiagram, realSituation }: ProofInput): string | null {
-  if (type === "tried") {
-    return uploads.some(ownUpload) ? null : "Add a screenshot or paste code from what you tried.";
-  }
+  if (type === "tried") return null; // optional: no proof means a "first look" post
   if (type === "explain") {
     const approved = uploads.some((u) => u.isGenerated && u.approvedAt && hasContent(u));
     return hasDiagram || approved || uploads.some(ownUpload)

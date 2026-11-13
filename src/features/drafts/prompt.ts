@@ -21,7 +21,8 @@ export type DraftContext = {
 
 const TYPE_GOAL: Record<PostType, string> = {
   explain: "Explain it simply: explain the concept so a junior engineer gets it, using the owner's own explanation and examples.",
-  tried: "I tried it: tell what the owner built or tried, what worked, and what broke or surprised them.",
+  tried:
+    "I tried it: tell what the owner built or tried, what worked, and what broke or surprised them. If the answers and attachments do not show the owner actually used it, write a first-look post instead: what it is, why it matters for the owner's stack, and what they plan to try. Never say or imply they built, ran or tested it, and use no [ADD: …] placeholders for missing results.",
   lessons: "2-year lessons: tell the real situation from the owner's work and what they learned. Never name clients or employers.",
 };
 

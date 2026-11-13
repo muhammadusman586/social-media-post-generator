@@ -51,7 +51,7 @@ I chose three types. Each has its own source, interview and outputs.
 | Type | Source | Interview asks (examples) | Outputs | Required proof |
 |---|---|---|---|---|
 | **Explain it simply** | Radar: a concept engineers are discussing now (MCP, evals, agent memory…) | "How would you explain this to a junior?" "Where have you seen it used?" | Instagram carousel (6–7 slides) · LinkedIn post + the same slides as images · X thread | A diagram or a code snippet |
-| **I tried it** | Radar: a new release/tool relevant to my stack | "What did you build/try?" "What worked?" "What broke or surprised you?" | LinkedIn story post · X post or short thread · (optional) Instagram slides | My screenshot or code snippet (upload required) |
+| **I tried it** | Radar: a new release/tool relevant to my stack | "What did you build/try?" "What worked?" "What broke or surprised you?" | LinkedIn story post · X post or short thread · (optional) Instagram slides | Optional. Without my screenshot/code the drafts become an honest "first look" (what it is, why it matters, what I plan to try), never claiming I ran it. Add proof later and regenerate |
 | **2-year lessons** | My reflection bank (no news needed) | Weekly reflection prompt, e.g. "What did you get wrong this month?" | LinkedIn text post · X post · Instagram single quote-style slide | A real situation from my work (client names removed) |
 
 **Rotation (default, editable):** week 1 Explain · week 2 I tried it · week 3 Explain ·

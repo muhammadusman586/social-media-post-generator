@@ -8,10 +8,9 @@ const example: ProofUpload = { ...code, isGenerated: true };
 const approved: ProofUpload = { ...example, approvedAt: new Date() };
 
 describe("draftBlocker", () => {
-  it("requires an own upload for tried", () => {
-    expect(draftBlocker({ type: "tried", uploads: [], hasDiagram: false })).toMatch(/screenshot/);
-    expect(draftBlocker({ type: "tried", uploads: [emptyCode], hasDiagram: false })).toMatch(/screenshot/);
-    expect(draftBlocker({ type: "tried", uploads: [approved], hasDiagram: false })).toMatch(/screenshot/);
+  it("lets tried draft without any upload (first-look post)", () => {
+    expect(draftBlocker({ type: "tried", uploads: [], hasDiagram: false })).toBeNull();
+    expect(draftBlocker({ type: "tried", uploads: [emptyCode], hasDiagram: false })).toBeNull();
     expect(draftBlocker({ type: "tried", uploads: [image], hasDiagram: false })).toBeNull();
     expect(draftBlocker({ type: "tried", uploads: [code], hasDiagram: false })).toBeNull();
   });
@@ -36,8 +35,8 @@ describe("proofMissing", () => {
     expect(proofMissing({ type: "explain", uploads: [image], hasDiagram: false })).toBeNull();
   });
 
-  it("tried does not accept a diagram alone", () => {
-    expect(proofMissing({ type: "tried", uploads: [], hasDiagram: true })).toMatch(/screenshot/);
+  it("tried never requires proof", () => {
+    expect(proofMissing({ type: "tried", uploads: [], hasDiagram: false })).toBeNull();
   });
 
   it("lessons depends on the real-situation check", () => {
@@ -53,7 +52,8 @@ describe("proofMissing", () => {
 
 describe("finalizeBlockers", () => {
   it("blocks on missing proof and on placeholders, and passes when both are fine", () => {
-    expect(finalizeBlockers({ type: "tried", uploads: [], hasDiagram: false, draftTexts: ["ok"] })).toHaveLength(1);
+    expect(finalizeBlockers({ type: "explain", uploads: [], hasDiagram: false, draftTexts: ["ok"] })).toHaveLength(1);
+    expect(finalizeBlockers({ type: "tried", uploads: [], hasDiagram: false, draftTexts: ["ok"] })).toEqual([]);
     expect(
       finalizeBlockers({ type: "tried", uploads: [image], hasDiagram: false, draftTexts: ["ok", "cut [ADD: number]"] }),
     ).toEqual(["Fill in or delete every [ADD: …] placeholder."]);
